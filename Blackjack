@@ -1,0 +1,277 @@
+import java.util.*;
+
+public class Main {
+  public static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
+    System.out.print("Please enter your name: ");
+    String name = scan.nextLine();
+    System.out.println("Welcome, " + name + "! It's time to play Blackjack!");
+
+    System.out.print("How many paperclips will you be waging: ");
+    int wage = scan.nextInt();
+    System.out.println("Let's begin!\n");
+    System.out.print("Dealing...\nYour cards are:\n");
+
+    int[] deck = new int[52];
+    String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
+    String[] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+
+    // Initialize cards
+    for (int i = 0; i < deck.length; i++) {
+      deck[i] = i;
+    }
+
+    // Shuffle the cards
+    for (int i = 0; i < deck.length; i++) {
+      int index = (int)(Math.random() * deck.length);
+      int temp = deck[i];
+      deck[i] = deck[index];
+      deck[index] = temp;
+    }
+
+    /*
+    // Display all the cards
+    for (int i = 0; i < 52; i++) {
+      String suit = suits[deck[i] / 13];
+      String rank = ranks[deck[i] % 13];
+      System.out.println(rank + " of " + suit);
+    }
+    */
+
+    // Deal 2 cards to player
+    for (int i = 0; i < 2; i++) {
+      String suit = suits[deck[i] / 13];
+      String rank = ranks[deck[i] % 13];
+      System.out.println(rank + " of " + suit); 
+    }
+
+    // Deal 2 cards to dealer
+    System.out.print("\nThe Dealer's cards are:\n");
+
+    for (int i = 2; i < 3; i++) { 
+      String suit = suits[deck[i] / 13];
+      String rank = ranks[deck[i] % 13];
+      System.out.println(rank + " of " + suit + "\nHIDDEN CARD\n"); 
+    } // Remember that Dealer has card in index 3 (4th card) - Show in Dealer's turn
+
+    // Player's Turn
+    System.out.print("Would you like to HIT (1) or STAY (2): ");
+    int decision = scan.nextInt();
+    
+    while (decision != 2)
+    {
+      if (decision == 1)
+      {
+        int c = 4;
+        for (int i = c; i < c+1; i++) {
+          c++;
+          String suit = suits[deck[i] / 13];
+          String rank = ranks[deck[i] % 13];
+          System.out.println(rank + " of " + suit + "\n");
+          System.out.print("Would you like to HIT (1) or STAY (2): ");
+          decision = scan.nextInt();
+          if (decision != 1)
+          {
+            break;
+          }
+        }
+      }
+      else
+      {
+        System.out.println("Please choose either 1 or 2\n");
+        System.out.print("Would you like to HIT (1) or STAY (2): ");
+        decision = scan.nextInt();
+      }
+    }
+
+    // Dealer's Turn
+    System.out.println("\nNow it's the Dealer's turn.\nThe Dealer's cards are...");
+    for (int i = 2; i < 4; i++) { 
+      String suit = suits[deck[i] / 13];
+      String rank = ranks[deck[i] % 13];
+      System.out.println(rank + " of " + suit);
+    } 
+    //NEED TO MAKE DEALER TAKE ANOTHER CARD IF LESS THAN 16
+    //NEED TO DETERMINE WINNER BY LOOKING AT NUMBERS (IF TIED, DEALER WINS) -- MAKE WAGE MULTIPLIED
+
+  }
+}
+
+--------------------------------------------------------------------------------------------------------
+UPDATED
+
+import java.util.*;
+
+public class Main {
+  public static void main(String[] args) {
+    Scanner scan = new Scanner(System.in);
+    System.out.print("Please enter your name: ");
+    String name = scan.nextLine();
+    System.out.println("Welcome, " + name + "! It's time to play Blackjack!");
+
+    System.out.print("How many paperclips will you be waging: ");
+    int wage = scan.nextInt();
+    System.out.println("Let's begin!\n");
+    System.out.print("Dealing...\nYour cards are:\n");
+
+    int[] deck = new int[52];
+    String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
+    //String[] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+    int[] ranks = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+
+    // Initialize cards
+    for (int i = 0; i < deck.length; i++) {
+      deck[i] = i;
+    }
+
+    // Shuffle the cards
+    for (int i = 0; i < deck.length; i++) {
+      int index = (int)(Math.random() * deck.length);
+      int temp = deck[i];
+      deck[i] = deck[index];
+      deck[index] = temp;
+    }
+
+    /*
+    // Display all the cards
+    for (int i = 0; i < 52; i++) {
+      String suit = suits[deck[i] / 13];
+      String rank = ranks[deck[i] % 13];
+      System.out.println(rank + " of " + suit);
+    }
+    */
+
+    // Deal 2 cards to player
+    for (int i = 0; i < 2; i++) {
+      String suit = suits[deck[i] / 13];
+      int rank = ranks[deck[i] % 13];
+      if (rank == 1)
+      {
+        System.out.println("Ace of " + suit);
+      }
+      else if (rank == 11)
+      {
+        System.out.println("Jack of " + suit);
+      }
+      else if (rank == 12)
+      {
+        System.out.println("Queen of " + suit);
+      }
+      else if (rank == 13)
+      {
+        System.out.println("King of " + suit);
+      }
+      else
+      {
+        System.out.println(rank + " of " + suit);
+      } 
+    }
+
+    // Deal 2 cards to dealer
+    System.out.print("\nThe Dealer's cards are:\n");
+
+    for (int i = 2; i < 3; i++) { 
+      String suit = suits[deck[i] / 13];
+      int rank = ranks[deck[i] % 13];
+      if (rank == 1)
+      {
+        System.out.println("Ace of " + suit + "\nHIDDEN CARD\n");
+      }
+      if (rank == 11)
+      {
+        System.out.println("Jack of " + suit + "\nHIDDEN CARD\n");
+      }
+      else if (rank == 12)
+      {
+        System.out.println("Queen of " + suit + "\nHIDDEN CARD\n");
+      }
+      else if (rank == 13)
+      {
+        System.out.println("King of " + suit + "\nHIDDEN CARD\n");
+      }
+      else
+      {
+        System.out.println(rank + " of " + suit + "\nHIDDEN CARD\n"); 
+      } 
+    } // Remember that Dealer has card in index 3 (4th card) - Show in Dealer's turn
+
+    // Player's Turn
+    System.out.print("Would you like to HIT (1) or STAY (2): ");
+    int decision = scan.nextInt();
+    
+    while (decision != 2)
+    {
+      if (decision == 1)
+      {
+        int c = 4;
+        for (int i = c; i < c+1; i++) {
+          c++;
+          String suit = suits[deck[i] / 13];
+          int rank = ranks[deck[i] % 13];
+          if (rank == 1)
+          {
+            System.out.println("Ace of " + suit + "\n");
+          }
+          if (rank == 11)
+          {
+            System.out.println("Jack of " + suit + "\n");
+          }
+          else if (rank == 12)
+          {
+            System.out.println("Queen of " + suit + "\n");
+          }
+          else if (rank == 13)
+          {
+            System.out.println("King of " + suit + "\n");
+          }
+          else
+          {
+            System.out.println(rank + " of " + suit + "\n");
+          } 
+          System.out.print("Would you like to HIT (1) or STAY (2): ");
+          decision = scan.nextInt();
+          if (decision != 1)
+          {
+            break;
+          }
+        }
+      }
+      else
+      {
+        System.out.println("Please choose either 1 or 2\n");
+        System.out.print("Would you like to HIT (1) or STAY (2): ");
+        decision = scan.nextInt();
+      }
+    }
+
+    // Dealer's Turn
+    System.out.println("\nNow it's the Dealer's turn.\nThe Dealer's cards are...");
+    for (int i = 2; i < 4; i++) { 
+      String suit = suits[deck[i] / 13];
+      int rank = ranks[deck[i] % 13];
+      if (rank == 1)
+      {
+        System.out.println("Ace of " + suit);
+      }
+      else if (rank == 11)
+      {
+        System.out.println("Jack of " + suit);
+      }
+      else if (rank == 12)
+      {
+        System.out.println("Queen of " + suit);
+      }
+      else if (rank == 13)
+      {
+        System.out.println("King of " + suit);
+      }
+      else
+      {
+        System.out.println(rank + " of " + suit);
+      } 
+    } 
+    //NEED TO MAKE DEALER TAKE ANOTHER CARD IF LESS THAN 16
+    //NEED TO DETERMINE WINNER BY LOOKING AT NUMBERS (IF TIED, DEALER WINS) -- MAKE WAGE MULTIPLIED
+    
+  }
+}
